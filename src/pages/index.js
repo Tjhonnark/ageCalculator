@@ -12,11 +12,10 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <section>
+        <section className={styles.section}>
           <h1>¡Coloca tu fecha de nacimiento!</h1>
-          <label htmlFor="nombre">
-          <input type="text" /></label>
-          <button></button>
+          <input type="date" name='date'/>
+          <button type='submit'>Mandar</button>
         </section>
       </main>
 
