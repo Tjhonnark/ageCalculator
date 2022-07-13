@@ -17,18 +17,6 @@
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  gap: 5px;
-}
-
-.section input {
-width: 50%;
-background-color: #F4F3EE;
-border-color: #463F3A;
-
-}
-
-.section button {
-  width: 50%;
 }
 
 .footer {

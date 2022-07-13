@@ -1,8 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
+/* COMPONENTS */
+import AgeCalculator from '../components/AgeCalculator'
+/* STYLES */
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,9 +17,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <section className={styles.section}>
-          <h1>¡Coloca tu fecha de nacimiento!</h1>
-          <input type="date" name='date'/>
-          <button type='submit'>Mandar</button>
+          <AgeCalculator />
         </section>
       </main>
 
