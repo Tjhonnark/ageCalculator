@@ -1,0 +1,19 @@
+.calculator {
+  background-color: red;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  gap: 5px;
+}
+
+.calculator h1 {
+}
+
+.calculator input {
+  background-color: #f4f3ee;
+  border-color: #463f3a;
+  width: 50%;
+}
+
+.calculator button {
+}
