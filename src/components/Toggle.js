@@ -11,6 +11,8 @@ export default function Toggle() {
     return (
         <div className={styles.body}>
             <div className={styles.toggle}>
+                {toggle ? <p>Today</p> : <p>Date two</p> 
+                }
                 <label className={styles.switch}>
                     <input type="checkbox" onClick={() => setToggle(!toggle)} />
                     <span className={styles.slider}></span>
