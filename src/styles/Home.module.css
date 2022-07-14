@@ -14,17 +14,17 @@
 
 .section {
   height: 100vh;
-  padding-top: 5rem;
   display: flex;
   flex-flow: column wrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  gap: 5rem;
+  gap: 1rem;
 }
 
 .section h1 {
   color: #ffff;
   font-size: 3rem;
+  font-family: 'lucida console', monospace;
 }
 
 .footer {

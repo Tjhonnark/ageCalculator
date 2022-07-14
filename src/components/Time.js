@@ -1,70 +1,80 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import 'react-day-picker/dist/style.css';
+import { addDays, format } from 'date-fns';
+import { DateRange, DayPicker } from 'react-day-picker';
 /* STYLES */
 import styles from '../styles/Time.module.css'
+import 'react-day-picker/dist/style.css';
 
 const useCounter = () => {
+    const pastMonth = new Date();
 
-    const [numbers, setNumbers] = useState({
-        date1: "",
-        date2: ""
-    });
+    const defaultSelected = DateRange = {
+        from: pastMonth,
+        to: addDays(pastMonth, 4)
+    };
+    const [range, setRange] = useState(defaultSelected);
 
-    const handleInputChange = e => {
-        setNumbers({
-            ...numbers,
-            [e.target.name]: e.target.value
-        })
+    let footer = <p>Please pick the first day.</p>;
+    if (range?.from) {
+        if (!range.to) {
+            footer = <p>{format(range.from, 'PPP')}</p>;
+        } else if (range.to) {
+            footer = (
+                <p>
+                    {format(range.from, 'PPP')}–{format(range.to, 'PPP')}
+                </p>
+            );
+        }
     }
 
     const send = e => {
         e.preventDefault()
-        /* DATE ONE */
-        const date1Year = parseInt(String(numbers.date1).substring(0, 4));
-        const date1Month = parseInt(String(numbers.date1).substring(5, 7));
-        const date1Day = parseInt(String(numbers.date1).substring(8, 10));
+        /* TODAY */
+        const today = range.to;
+        const todayYear = parseInt(today.getFullYear());
+        const todayMonth = parseInt(today.getMonth()) + 1;
+        const todayDay = parseInt(today.getDate());
 
-        /* DATE TWO */
-        const date2Year = parseInt(String(numbers.date2).substring(0, 4));
-        const date2Month = parseInt(String(numbers.date2).substring(5, 7));
-        const date2Day = parseInt(String(numbers.date2).substring(8, 10));
+        /* BIRTHDAY */
+        const birth = range.from;
+        const birthYear = parseInt(birth.getFullYear());
+        const birthMonth = parseInt(birth.getMonth()) + 1;
+        const birthDay = parseInt(birth.getDate());
 
         /* CONDITIONAL */
-        let age = date2Year - date1Year;
-        if (date1Month < date2Month) {
+        let age = todayYear - birthYear;
+        if (todayMonth < birthMonth) {
             age--;
-        } else if (date1Month === date2Month) {
-            if (date1Day < date2Day) {
+        } else if (todayMonth === birthMonth) {
+            if (todayDay < birthDay) {
                 age--;
             }
         }
         document.getElementById('result').innerHTML = age + " Age";
-        console.log('Enviando datos...' + age);
     }
 
-    return { handleInputChange, send }
+    return { range, footer, pastMonth, setRange, send }
 }
-
 export default function Age() {
 
-    const { handleInputChange, send } = useCounter()
+    const { range, footer, pastMonth, setRange, send } = useCounter();
 
     return (
         <div className={styles.body}>
-            <p>{<span id='result'></span>}</p>
-            <form onSubmit={send} className={styles.time}>
-                <input
-                    type="date"
-                    name='date1'
-                    onChange={handleInputChange}
+            <div>
+                <DayPicker
+                    className={styles.time}
+                    mode="range"
+                    defaultMonth={pastMonth}
+                    selected={range}
+                    onSelect={setRange}
+                    footer={footer}
+                    fromYear={1950} toYear={3000}
+                    captionLayout="dropdown"
                 />
-                <input
-                    type="date"
-                    name='date2'
-                    onChange={handleInputChange}
-                />
-                <button type='submit'>Calculate</button>
-            </form>
+            </div>
+            <button onClick={send} className={styles.calculate}>Calculate</button>
         </div>
     )
 }
-

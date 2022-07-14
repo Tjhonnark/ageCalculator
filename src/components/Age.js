@@ -1,18 +1,17 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+import { format } from 'date-fns';
 /* STYLES */
 import styles from '../styles/Age.module.css'
 
 const useCounter = () => {
 
-    const [numbers, setNumbers] = useState({
-        date1: "",
-    });
+    const [selected, setSelected] = useState();
 
-    const handleInputChange = e => {
-        setNumbers({
-            ...numbers,
-            [e.target.name]: e.target.value
-        })
+    let footer = <p>Please pick a day.</p>;
+    if (selected) {
+        footer = <p className={styles.footer}>{format(selected, 'PP')}.</p>;
     }
 
     const send = e => {
@@ -24,9 +23,10 @@ const useCounter = () => {
         const todayDay = parseInt(today.getDate());
 
         /* BIRTHDAY */
-        const birthYear = parseInt(String(numbers.date1).substring(0, 4));
-        const birthMonth = parseInt(String(numbers.date1).substring(5, 7));
-        const birthDay = parseInt(String(numbers.date1).substring(8, 10));
+        const birth = selected;
+        const birthYear = parseInt(birth.getFullYear());
+        const birthMonth = parseInt(birth.getMonth()) + 1;
+        const birthDay = parseInt(birth.getDate());
 
         /* CONDITIONAL */
         let age = todayYear - birthYear;
@@ -38,28 +38,32 @@ const useCounter = () => {
             }
         }
         document.getElementById('result').innerHTML = age + " Age";
-        console.log('Enviando datos...' + age);
     }
 
-    return { handleInputChange, send }
+    return { selected, footer, setSelected, send }
+}
+
+export function ResultAge() {
+    return <p className={styles.ageage}>{<span id='result'></span>}</p>
 }
 
 export default function Age() {
 
-    const { handleInputChange, send } = useCounter()
+    const { selected, footer, setSelected, send } = useCounter()
 
     return (
         <div className={styles.body}>
-            <p>{<span id='result'></span>}</p>
-            <form onSubmit={send} className={styles.age}>
-                <input
-                    type="date"
-                    name='date1'
-                    onChange={handleInputChange}
+            <div>
+                <DayPicker
+                    className={styles.age}
+                    mode="single"
+                    selected={selected}
+                    onSelect={setSelected}
+                    fromYear={1950} toYear={3000}
+                    captionLayout="dropdown"
                 />
-                <button type='submit'>Calculate</button>
-            </form>
+            </div>
+            <button onClick={send} className={styles.calculate}>Calculate</button>
         </div>
     )
 }
-

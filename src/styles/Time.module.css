@@ -1,44 +1,48 @@
 .body {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-  .body p {
-    text-align: center;
-    font-size: 2rem;
-    flex-basis: 100%;
-  }
-  .time {
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
-    gap: 2rem;
-  }
-  
-  .time input {
-    background-color: #f4f3ee;
-    border-color: #463f3a;
-  }
-  
-  .time button {
-    color: #090909;
-    padding: 0.7em 1.7em;
-    font-size: 18px;
-    border-radius: 0.5em;
-    background: #e8e8e8;
-    border: 1px solid #e8e8e8;
-    transition: all 0.3s;
-    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
-  }
-  .time button:hover {
-    border: 1px solid white;
-  }
-  
-  .time button:active {
-    box-shadow: 4px 4px 12px #c5c5c5, -4px -4px 12px #ffffff;
-  }
-  
-  .body div {
-    flex-basis: 100%;
-  }
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.time {
+  color: #c5c5c5;
+}
+
+.footer {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.calculate {
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+.calculate:hover {
+  background-color: #5956CD;
+  box-shadow: 0px 15px 20px #5a56cd91;
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+.calculate:active {
+  transform: translateY(-1px);
+}
+
+.result {
+  color: #ffffff;
+  text-align: center;
+  font-size: 2rem;
+}
