@@ -1,8 +1,8 @@
 import { useState } from 'react';
 /* STYLES */
-import styles from '../styles/AgeCalculator.module.css'
+import styles from '../styles/Age.module.css'
 
-export default function AgeCalculator() {
+const useCounter = () => {
 
     const [numbers, setNumbers] = useState({
         date1: "",
@@ -14,7 +14,7 @@ export default function AgeCalculator() {
             [e.target.name]: e.target.value
         })
     }
-    
+
     const send = e => {
         e.preventDefault()
         /* TODAY */
@@ -22,35 +22,36 @@ export default function AgeCalculator() {
         const todayYear = parseInt(today.getFullYear());
         const todayMonth = parseInt(today.getMonth()) + 1;
         const todayDay = parseInt(today.getDate());
+
         /* BIRTHDAY */
-        const birthYear = parseInt(String(numbers.date1).substring(0,4));
-        const birthMonth = parseInt(String(numbers.date1).substring(5,7));
-        const birthDay = parseInt(String(numbers.date1).substring(8,10));
-        
+        const birthYear = parseInt(String(numbers.date1).substring(0, 4));
+        const birthMonth = parseInt(String(numbers.date1).substring(5, 7));
+        const birthDay = parseInt(String(numbers.date1).substring(8, 10));
+
+        /* CONDITIONAL */
         let age = todayYear - birthYear;
         if (todayMonth < birthMonth) {
-            age--;  
+            age--;
         } else if (todayMonth === birthMonth) {
             if (todayDay < birthDay) {
                 age--;
             }
         }
-        document.getElementById('result').innerHTML = age;
+        document.getElementById('result').innerHTML = age + " Age";
         console.log('Enviando datos...' + age);
-        return age;
-
-        /* const add = new Date() - n1;
-        const nuevo = {
-            result: add,
-            valor1: n1
-        }
-        document.getElementById('result').innerHTML = nuevo.result;
-        console.log('Enviando datos...' + nuevo.valor1); */
     }
 
+    return { handleInputChange, send }
+}
+
+export default function Age() {
+
+    const { handleInputChange, send } = useCounter()
+
     return (
-        <>
-            <form onSubmit={send}>
+        <div className={styles.body}>
+            <p>{<span id='result'></span>}</p>
+            <form onSubmit={send} className={styles.age}>
                 <input
                     type="date"
                     name='date1'
@@ -58,8 +59,7 @@ export default function AgeCalculator() {
                 />
                 <button type='submit'>Calculate</button>
             </form>
-            <p>Tu edad es = {<span id='result'></span>}</p>
-
-        </>
+        </div>
     )
 }
+
