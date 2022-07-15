@@ -7,7 +7,7 @@ import styles from '../styles/Age.module.css'
 
 const dayjs = require('dayjs')
 
-const useCounter = () => {
+export function useCounter() {
 
     const [selected, setSelected] = useState();
 
@@ -19,16 +19,16 @@ const useCounter = () => {
     const send = e => {
         e.preventDefault()
         /* TODAY */
-        const date1 = dayjs();
+        var date1 = dayjs();
         const todayDateMonth = dayjs().date();
         const todayMonth = dayjs().month();
 
         /* BIRTHDAY */
-        const date2 = dayjs(selected);
+        var date2 = dayjs(selected);
         const birthDateMonth = dayjs(selected).date();
         const birthMonth = dayjs(selected).month();
         const endTimeMonth = dayjs(selected).endOf('month');
-        const endTime = dayjs(endTimeMonth).date(); 
+        const endTime = dayjs(endTimeMonth).date();
 
         const age = date1.diff(date2, 'year')
         const month = date1.diff(date2, 'month')
@@ -68,17 +68,20 @@ const useCounter = () => {
             }
         }
 
-        document.getElementById('resultAge').innerHTML = age + " years old,";
-        document.getElementById('resultAgeCompleted').innerHTML = monthsLived + " months and " + daysLived + " days.";
+        if (days===0) {
+            daysLived = 0;
+        }
+
+        document.getElementById('resultAge').innerHTML = age + " years old";
+        document.getElementById('resultAgeCompleted').innerHTML = age + " years old, " + monthsLived + " months and " + daysLived + " days.";
         document.getElementById('resultBirthday').innerHTML = missingMonth + " months and " + missingDay + " days to your birthday.";
         document.getElementById('resultDays').innerHTML = "You have lived " + days + " days.";
     }
-
     return { selected, footer, setSelected, send }
 }
 
 export function AgeResultAge() {
-    return <p className={styles.ageage}>{<span id='resultAge'></span>}</p>
+    return <p className={styles.resultAge}>{<span id='resultAge'></span>}</p>
 }
 export function AgeResultAgeCompleted() {
     return <p className={styles.ageage}>{<span id='resultAgeCompleted'></span>}</p>

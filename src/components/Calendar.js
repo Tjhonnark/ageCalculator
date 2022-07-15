@@ -1,16 +1,16 @@
 import { useState } from 'react'
-import Age from '../components/Age'
-import Time from '../components/Time'
+import Age from './Age'
+import Time from './Time'
 /* STYLES */
-import styles from '../styles/Toggle.module.css'
+import styles from '../styles/Calendar.module.css'
 
-export function prueba() {
+export function Toggle() {
     const [toggle, setToggle] = useState(true);
     return { toggle, setToggle }
 }
 
-export default function Toggle() {
-    const { toggle, setToggle } = prueba();
+export default function Calendar() {
+    const { toggle, setToggle } = Toggle();
     return (
         <div className={styles.body}>
             <div className={styles.toggle}>

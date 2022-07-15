@@ -1,26 +1,40 @@
+import { useState } from 'react'
 import Image from 'next/image'
 /* COMPONENTS */
-import { AgeResultAge, AgeResultAgeCompleted, AgeResultBirthday, AgeResultDays } from '../components/Age'
-import { ResultAge, ResultAgeCompleted, ResultBirthday, ResultDays } from '../components/Time'
-import Toggle, { prueba } from '../components/Toggle'
+import { selected, AgeResultAge, AgeResultAgeCompleted, AgeResultBirthday, AgeResultDays } from '../components/Age'
+import { TimeResultAge, TimeResultAgeCompleted, TimeResultDays } from '../components/Time'
+import Calendar, { Toggle } from '../components/Calendar'
 /* STYLES */
 import styles from '../styles/Home.module.css'
 
+const dayjs = require('dayjs')
+
 export default function Home() {
-  const { toggle } = prueba();
+  const { toggle } = Toggle();
+
+  var test1 = dayjs();
+  var test2 = dayjs(selected);
+  var daystest = test1.diff(test2, 'day')
+  console.log(daystest)
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <section className={styles.section}>
           <h1>Age Calculator</h1>
           {toggle ?
-            <div>
-              <AgeResultAge /> <AgeResultAgeCompleted/> <AgeResultBirthday /> <AgeResultDays /> 
+            <div className={styles.data}>
+              <AgeResultAge />
+              <AgeResultAgeCompleted />
+              <AgeResultBirthday />
+              <AgeResultDays />
             </div> :
-            <div>
-              <ResultAge /> <ResultAgeCompleted/> <ResultBirthday /> <ResultDays />
+            <div className={styles.data}>
+              <TimeResultAge />
+              <TimeResultAgeCompleted />
+              <TimeResultDays />
             </div>}
-          <Toggle></Toggle>
+          <Calendar></Calendar>
         </section>
       </main>
       <footer className={styles.footer}>

@@ -41,8 +41,12 @@
   transform: translateY(-1px);
 }
 
+.resultAge {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.5rem;
+}
+
 .ageage {
-  color: #ffffff;
-  text-align: center;
-  font-size: 2rem;
+  margin: 0;
+  font-size: 1.5rem;
 }
