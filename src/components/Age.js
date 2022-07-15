@@ -5,6 +5,9 @@ import { format } from 'date-fns';
 /* STYLES */
 import styles from '../styles/Age.module.css'
 
+const dayjs = require('dayjs')
+
+
 const useCounter = () => {
 
     const [selected, setSelected] = useState();
@@ -17,38 +20,75 @@ const useCounter = () => {
     const send = e => {
         e.preventDefault()
         /* TODAY */
-        const today = new Date();
-        const todayYear = parseInt(today.getFullYear());
-        const todayMonth = parseInt(today.getMonth()) + 1;
-        const todayDay = parseInt(today.getDate());
+        const date1 = dayjs();
+        const todayDateMonth = dayjs().date();
+        const todayMonth = dayjs().month();
 
         /* BIRTHDAY */
-        const birth = selected;
-        const birthYear = parseInt(birth.getFullYear());
-        const birthMonth = parseInt(birth.getMonth()) + 1;
-        const birthDay = parseInt(birth.getDate());
+        const date2 = dayjs(selected);
+        const birthDateMonth = dayjs(selected).date();
+        const birthMonth = dayjs(selected).month();
+        const endTimeMonth = dayjs(selected).endOf('month');
+        const endTime = dayjs(endTimeMonth).date(); 
 
-        /* CONDITIONAL AGE*/
-        let age = todayYear - birthYear;
+        const age = date1.diff(date2, 'year')
+        const month = date1.diff(date2, 'month')
+        const days = date1.diff(date2, 'day')
+
+        const monthsLived = month - (age * 12);
+
         if (todayMonth < birthMonth) {
-            age--;
-        } else if (todayMonth === birthMonth) {
-            if (todayDay < birthDay) {
-                age--;
+            if (todayDateMonth <= birthDateMonth) {
+                var missingMonth = birthMonth - todayMonth;
+                var missingDay = birthDateMonth - todayDateMonth;
+                var daysLived = endTime - (birthDateMonth - todayDateMonth);
+            } else {
+                var missingMonth = birthMonth - todayMonth - 1;
+                var missingDay = endTime - (todayDateMonth - birthDateMonth);
+                var daysLived = todayDateMonth - birthDateMonth;
+            }
+        } else if (todayMonth > birthMonth) {
+            if (todayDateMonth <= birthDateMonth) {
+                var missingMonth = 12 - (todayMonth - birthMonth);
+                var missingDay = birthDateMonth - todayDateMonth;
+                var daysLived = endTime - (birthDateMonth - todayDateMonth);
+            } else {
+                var missingMonth = 12 - (todayMonth - birthMonth) - 1;
+                var missingDay = endTime - (todayDateMonth - birthDateMonth);
+                var daysLived = todayDateMonth - birthDateMonth;
+            }
+        } else {
+            if (todayDateMonth <= birthDateMonth) {
+                var missingMonth = birthMonth - todayMonth;
+                var missingDay = birthDateMonth - todayDateMonth;
+                var daysLived = endTime - (birthDateMonth - todayDateMonth);
+            } else {
+                var missingMonth = 12 - (todayMonth - birthMonth) - 1;
+                var missingDay = endTime - (todayDateMonth - birthDateMonth);
+                var daysLived = todayDateMonth - birthDateMonth;
             }
         }
-        document.getElementById('result').innerHTML = age + " Age";
 
-        /* CONDITIONAL */
-        
-
+        document.getElementById('resultAge').innerHTML = age + " years old,";
+        document.getElementById('resultAgeCompleted').innerHTML = monthsLived + " months and " + daysLived + " days.";
+        document.getElementById('resultBirthday').innerHTML = missingMonth + " months and " + missingDay + " days to your birthday.";
+        document.getElementById('resultDays').innerHTML = "You have lived " + days + " days.";
     }
 
     return { selected, footer, setSelected, send }
 }
 
 export function ResultAge() {
-    return <p className={styles.ageage}>{<span id='result'></span>}</p>
+    return <p className={styles.ageage}>{<span id='resultAge'></span>}</p>
+}
+export function ResultAgeCompleted() {
+    return <p className={styles.ageage}>{<span id='resultAgeCompleted'></span>}</p>
+}
+export function ResultBirthday() {
+    return <p className={styles.ageage}>{<span id='resultBirthday'></span>}</p>
+}
+export function ResultDays() {
+    return <p className={styles.ageage}>{<span id='resultDays'></span>}</p>
 }
 
 const css = `
@@ -84,9 +124,9 @@ export default function Age() {
                         selected: 'selected',
                         today: 'today'
                     }}
-                    /* styles={{
-                        caption: { color: '#FECA71' }
-                      }} */
+                /* styles={{
+                    caption: { color: '#FECA71' }
+                  }} */
                 />
             </div>
             <button onClick={send} className={styles.calculate}>Calculate</button>
