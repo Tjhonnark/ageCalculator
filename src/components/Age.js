@@ -28,7 +28,7 @@ const useCounter = () => {
         const birthMonth = parseInt(birth.getMonth()) + 1;
         const birthDay = parseInt(birth.getDate());
 
-        /* CONDITIONAL */
+        /* CONDITIONAL AGE*/
         let age = todayYear - birthYear;
         if (todayMonth < birthMonth) {
             age--;
@@ -38,6 +38,10 @@ const useCounter = () => {
             }
         }
         document.getElementById('result').innerHTML = age + " Age";
+
+        /* CONDITIONAL */
+        
+
     }
 
     return { selected, footer, setSelected, send }
@@ -47,6 +51,20 @@ export function ResultAge() {
     return <p className={styles.ageage}>{<span id='result'></span>}</p>
 }
 
+const css = `
+.selected:not([disabled]) { 
+    font-weight: bold; 
+    border: 2px solid currentColor;
+}
+.selected:hover:not([disabled]) {
+}
+.today { 
+    font-weight: bold;
+    font-size: 110%; 
+    color: #FECA71;
+}
+`;
+
 export default function Age() {
 
     const { selected, footer, setSelected, send } = useCounter()
@@ -54,6 +72,7 @@ export default function Age() {
     return (
         <div className={styles.body}>
             <div>
+                <style>{css}</style>
                 <DayPicker
                     className={styles.age}
                     mode="single"
@@ -61,6 +80,13 @@ export default function Age() {
                     onSelect={setSelected}
                     fromYear={1950} toYear={3000}
                     captionLayout="dropdown"
+                    modifiersClassNames={{
+                        selected: 'selected',
+                        today: 'today'
+                    }}
+                    /* styles={{
+                        caption: { color: '#FECA71' }
+                      }} */
                 />
             </div>
             <button onClick={send} className={styles.calculate}>Calculate</button>

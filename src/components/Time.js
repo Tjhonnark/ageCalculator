@@ -15,14 +15,14 @@ const useCounter = () => {
     };
     const [range, setRange] = useState(defaultSelected);
 
-    let footer = <p>Please pick the first day.</p>;
+    let footer = <p className={styles.footer}>Please pick the first day.</p>;
     if (range?.from) {
         if (!range.to) {
-            footer = <p>{format(range.from, 'PPP')}</p>;
+            footer = <p className={styles.footer}>{format(range.from, 'PPP')}</p>;
         } else if (range.to) {
             footer = (
-                <p>
-                    {format(range.from, 'PPP')}–{format(range.to, 'PPP')}
+                <p className={styles.footer}>
+                    {format(range.from, 'PPP')} – {format(range.to, 'PPP')}
                 </p>
             );
         }
@@ -56,6 +56,20 @@ const useCounter = () => {
 
     return { range, footer, pastMonth, setRange, send }
 }
+
+const css = `
+  .selected { 
+    font-weight: bold;
+    font-size: 110%; 
+    color: #FECA71;
+  }
+  .today { 
+    font-weight: bold;
+    font-size: 140%; 
+    color: red;
+  }
+`;
+
 export default function Age() {
 
     const { range, footer, pastMonth, setRange, send } = useCounter();
@@ -63,6 +77,7 @@ export default function Age() {
     return (
         <div className={styles.body}>
             <div>
+            <style>{css}</style>
                 <DayPicker
                     className={styles.time}
                     mode="range"
@@ -72,6 +87,9 @@ export default function Age() {
                     footer={footer}
                     fromYear={1950} toYear={3000}
                     captionLayout="dropdown"
+                    modifiersClassNames={{
+                        selected: 'selected'
+                    }}
                 />
             </div>
             <button onClick={send} className={styles.calculate}>Calculate</button>

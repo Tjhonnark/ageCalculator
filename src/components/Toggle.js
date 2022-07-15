@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import Age from '../components/Age'
 import Time from '../components/Time'
-import Test from '../components/Test'
 /* STYLES */
 import styles from '../styles/Toggle.module.css'
 
-export default function Toggle() {
+export function prueba() {
     const [toggle, setToggle] = useState(true);
+    return { toggle, setToggle }
+}
 
+export default function Toggle() {
+    const { toggle, setToggle } = prueba();
     return (
         <div className={styles.body}>
             <div className={styles.toggle}>
