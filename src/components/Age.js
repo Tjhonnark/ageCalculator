@@ -1,65 +1,134 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+import { format } from 'date-fns';
 /* STYLES */
 import styles from '../styles/Age.module.css'
 
+const dayjs = require('dayjs')
+
 const useCounter = () => {
 
-    const [numbers, setNumbers] = useState({
-        date1: "",
-    });
+    const [selected, setSelected] = useState();
 
-    const handleInputChange = e => {
-        setNumbers({
-            ...numbers,
-            [e.target.name]: e.target.value
-        })
+    let footer = <p>Please pick a day.</p>;
+    if (selected) {
+        footer = <p className={styles.footer}>{format(selected, 'PP')}.</p>;
     }
 
     const send = e => {
         e.preventDefault()
         /* TODAY */
-        const today = new Date();
-        const todayYear = parseInt(today.getFullYear());
-        const todayMonth = parseInt(today.getMonth()) + 1;
-        const todayDay = parseInt(today.getDate());
+        const date1 = dayjs();
+        const todayDateMonth = dayjs().date();
+        const todayMonth = dayjs().month();
 
         /* BIRTHDAY */
-        const birthYear = parseInt(String(numbers.date1).substring(0, 4));
-        const birthMonth = parseInt(String(numbers.date1).substring(5, 7));
-        const birthDay = parseInt(String(numbers.date1).substring(8, 10));
+        const date2 = dayjs(selected);
+        const birthDateMonth = dayjs(selected).date();
+        const birthMonth = dayjs(selected).month();
+        const endTimeMonth = dayjs(selected).endOf('month');
+        const endTime = dayjs(endTimeMonth).date(); 
 
-        /* CONDITIONAL */
-        let age = todayYear - birthYear;
+        const age = date1.diff(date2, 'year')
+        const month = date1.diff(date2, 'month')
+        const days = date1.diff(date2, 'day')
+
+        const monthsLived = month - (age * 12);
+
         if (todayMonth < birthMonth) {
-            age--;
-        } else if (todayMonth === birthMonth) {
-            if (todayDay < birthDay) {
-                age--;
+            if (todayDateMonth <= birthDateMonth) {
+                var missingMonth = birthMonth - todayMonth;
+                var missingDay = birthDateMonth - todayDateMonth;
+                var daysLived = endTime - (birthDateMonth - todayDateMonth);
+            } else {
+                var missingMonth = birthMonth - todayMonth - 1;
+                var missingDay = endTime - (todayDateMonth - birthDateMonth);
+                var daysLived = todayDateMonth - birthDateMonth;
+            }
+        } else if (todayMonth > birthMonth) {
+            if (todayDateMonth <= birthDateMonth) {
+                var missingMonth = 12 - (todayMonth - birthMonth);
+                var missingDay = birthDateMonth - todayDateMonth;
+                var daysLived = endTime - (birthDateMonth - todayDateMonth);
+            } else {
+                var missingMonth = 12 - (todayMonth - birthMonth) - 1;
+                var missingDay = endTime - (todayDateMonth - birthDateMonth);
+                var daysLived = todayDateMonth - birthDateMonth;
+            }
+        } else {
+            if (todayDateMonth <= birthDateMonth) {
+                var missingMonth = birthMonth - todayMonth;
+                var missingDay = birthDateMonth - todayDateMonth;
+                var daysLived = endTime - (birthDateMonth - todayDateMonth);
+            } else {
+                var missingMonth = 12 - (todayMonth - birthMonth) - 1;
+                var missingDay = endTime - (todayDateMonth - birthDateMonth);
+                var daysLived = todayDateMonth - birthDateMonth;
             }
         }
-        document.getElementById('result').innerHTML = age + " Age";
-        console.log('Enviando datos...' + age);
+
+        document.getElementById('resultAge').innerHTML = age + " years old,";
+        document.getElementById('resultAgeCompleted').innerHTML = monthsLived + " months and " + daysLived + " days.";
+        document.getElementById('resultBirthday').innerHTML = missingMonth + " months and " + missingDay + " days to your birthday.";
+        document.getElementById('resultDays').innerHTML = "You have lived " + days + " days.";
     }
 
-    return { handleInputChange, send }
+    return { selected, footer, setSelected, send }
 }
+
+export function AgeResultAge() {
+    return <p className={styles.ageage}>{<span id='resultAge'></span>}</p>
+}
+export function AgeResultAgeCompleted() {
+    return <p className={styles.ageage}>{<span id='resultAgeCompleted'></span>}</p>
+}
+export function AgeResultBirthday() {
+    return <p className={styles.ageage}>{<span id='resultBirthday'></span>}</p>
+}
+export function AgeResultDays() {
+    return <p className={styles.ageage}>{<span id='resultDays'></span>}</p>
+}
+
+const css = `
+.selected:not([disabled]) { 
+    font-weight: bold; 
+    border: 2px solid currentColor;
+}
+.selected:hover:not([disabled]) {
+}
+.today { 
+    font-weight: bold;
+    font-size: 110%; 
+    color: #FECA71;
+}
+`;
 
 export default function Age() {
 
-    const { handleInputChange, send } = useCounter()
+    const { selected, footer, setSelected, send } = useCounter()
 
     return (
         <div className={styles.body}>
-            <p>{<span id='result'></span>}</p>
-            <form onSubmit={send} className={styles.age}>
-                <input
-                    type="date"
-                    name='date1'
-                    onChange={handleInputChange}
+            <div>
+                <style>{css}</style>
+                <DayPicker
+                    className={styles.age}
+                    mode="single"
+                    selected={selected}
+                    onSelect={setSelected}
+                    fromYear={1950} toYear={3000}
+                    captionLayout="dropdown"
+                    modifiersClassNames={{
+                        selected: 'selected',
+                        today: 'today'
+                    }}
+                /* styles={{
+                    caption: { color: '#FECA71' }
+                  }} */
                 />
-                <button type='submit'>Calculate</button>
-            </form>
+            </div>
+            <button onClick={send} className={styles.calculate}>Calculate</button>
         </div>
     )
 }
-
