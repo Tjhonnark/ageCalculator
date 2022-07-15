@@ -6,6 +6,8 @@ import { DateRange, DayPicker } from 'react-day-picker';
 import styles from '../styles/Time.module.css'
 import 'react-day-picker/dist/style.css';
 
+const dayjs = require('dayjs')
+
 const useCounter = () => {
     const pastMonth = new Date();
 
@@ -31,30 +33,75 @@ const useCounter = () => {
     const send = e => {
         e.preventDefault()
         /* TODAY */
-        const today = range.to;
-        const todayYear = parseInt(today.getFullYear());
-        const todayMonth = parseInt(today.getMonth()) + 1;
-        const todayDay = parseInt(today.getDate());
+        const date1 = dayjs(range.to);
+        const todayDateMonth = dayjs().date();
+        const todayMonth = dayjs().month();
 
         /* BIRTHDAY */
-        const birth = range.from;
-        const birthYear = parseInt(birth.getFullYear());
-        const birthMonth = parseInt(birth.getMonth()) + 1;
-        const birthDay = parseInt(birth.getDate());
+        const date2 = dayjs(range.from);
+        const birthDateMonth = dayjs(range.from).date();
+        const birthMonth = dayjs(range.from).month();
+        const endTimeMonth = dayjs(range.from).endOf('month');
+        const endTime = dayjs(endTimeMonth).date(); 
 
-        /* CONDITIONAL */
-        let age = todayYear - birthYear;
+        const age = date1.diff(date2, 'year')
+        const month = date1.diff(date2, 'month')
+        const days = date1.diff(date2, 'day')
+
+        const monthsLived = month - (age * 12);
+
         if (todayMonth < birthMonth) {
-            age--;
-        } else if (todayMonth === birthMonth) {
-            if (todayDay < birthDay) {
-                age--;
+            if (todayDateMonth <= birthDateMonth) {
+                var missingMonth = birthMonth - todayMonth;
+                var missingDay = birthDateMonth - todayDateMonth;
+                var daysLived = endTime - (birthDateMonth - todayDateMonth);
+            } else {
+                var missingMonth = birthMonth - todayMonth - 1;
+                var missingDay = endTime - (todayDateMonth - birthDateMonth);
+                var daysLived = todayDateMonth - birthDateMonth;
+            }
+        } else if (todayMonth > birthMonth) {
+            if (todayDateMonth <= birthDateMonth) {
+                var missingMonth = 12 - (todayMonth - birthMonth);
+                var missingDay = birthDateMonth - todayDateMonth;
+                var daysLived = endTime - (birthDateMonth - todayDateMonth);
+            } else {
+                var missingMonth = 12 - (todayMonth - birthMonth) - 1;
+                var missingDay = endTime - (todayDateMonth - birthDateMonth);
+                var daysLived = todayDateMonth - birthDateMonth;
+            }
+        } else {
+            if (todayDateMonth <= birthDateMonth) {
+                var missingMonth = birthMonth - todayMonth;
+                var missingDay = birthDateMonth - todayDateMonth;
+                var daysLived = endTime - (birthDateMonth - todayDateMonth);
+            } else {
+                var missingMonth = 12 - (todayMonth - birthMonth) - 1;
+                var missingDay = endTime - (todayDateMonth - birthDateMonth);
+                var daysLived = todayDateMonth - birthDateMonth;
             }
         }
-        document.getElementById('result').innerHTML = age + " Age";
+
+        document.getElementById('resultAge').innerHTML = age + " years old,";
+        document.getElementById('resultAgeCompleted').innerHTML = monthsLived + " months and " + daysLived + " days.";
+        document.getElementById('resultBirthday').innerHTML = missingMonth + " months and " + missingDay + " days to your birthday.";
+        document.getElementById('resultDays').innerHTML = "You have lived " + days + " days.";
     }
 
     return { range, footer, pastMonth, setRange, send }
+}
+
+export function ResultAge() {
+    return <p className={styles.ageage}>{<span id='resultAge'></span>}</p>
+}
+export function ResultAgeCompleted() {
+    return <p className={styles.ageage}>{<span id='resultAgeCompleted'></span>}</p>
+}
+export function ResultBirthday() {
+    return <p className={styles.ageage}>{<span id='resultBirthday'></span>}</p>
+}
+export function ResultDays() {
+    return <p className={styles.ageage}>{<span id='resultDays'></span>}</p>
 }
 
 const css = `
@@ -70,7 +117,7 @@ const css = `
   }
 `;
 
-export default function Age() {
+export default function Time() {
 
     const { range, footer, pastMonth, setRange, send } = useCounter();
 

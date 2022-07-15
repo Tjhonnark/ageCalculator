@@ -7,7 +7,6 @@ import styles from '../styles/Age.module.css'
 
 const dayjs = require('dayjs')
 
-
 const useCounter = () => {
 
     const [selected, setSelected] = useState();
@@ -78,16 +77,16 @@ const useCounter = () => {
     return { selected, footer, setSelected, send }
 }
 
-export function ResultAge() {
+export function AgeResultAge() {
     return <p className={styles.ageage}>{<span id='resultAge'></span>}</p>
 }
-export function ResultAgeCompleted() {
+export function AgeResultAgeCompleted() {
     return <p className={styles.ageage}>{<span id='resultAgeCompleted'></span>}</p>
 }
-export function ResultBirthday() {
+export function AgeResultBirthday() {
     return <p className={styles.ageage}>{<span id='resultBirthday'></span>}</p>
 }
-export function ResultDays() {
+export function AgeResultDays() {
     return <p className={styles.ageage}>{<span id='resultDays'></span>}</p>
 }
 

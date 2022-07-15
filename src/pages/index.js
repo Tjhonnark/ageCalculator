@@ -1,6 +1,7 @@
 import Image from 'next/image'
 /* COMPONENTS */
-import { ResultAge, ResultAgeCompleted, ResultBirthday, ResultDays } from '../components/Age'
+import { AgeResultAge, AgeResultAgeCompleted, AgeResultBirthday, AgeResultDays } from '../components/Age'
+import { ResultAge, ResultAgeCompleted, ResultBirthday, ResultDays } from '../components/Time'
 import Toggle, { prueba } from '../components/Toggle'
 /* STYLES */
 import styles from '../styles/Home.module.css'
@@ -14,7 +15,7 @@ export default function Home() {
           <h1>Age Calculator</h1>
           {toggle ?
             <div>
-              <ResultAge /> <ResultAgeCompleted/> <ResultBirthday /> <ResultDays /> 
+              <AgeResultAge /> <AgeResultAgeCompleted/> <AgeResultBirthday /> <AgeResultDays /> 
             </div> :
             <div>
               <ResultAge /> <ResultAgeCompleted/> <ResultBirthday /> <ResultDays />
