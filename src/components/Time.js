@@ -13,7 +13,7 @@ const useCounter = () => {
 
     const defaultSelected = DateRange = {
         from: pastMonth,
-        to: addDays(pastMonth, 4)
+        to: ""
     };
     const [range, setRange] = useState(defaultSelected);
 
@@ -34,14 +34,14 @@ const useCounter = () => {
         e.preventDefault()
         /* TODAY */
         const date1 = dayjs(range.to);
-        const todayDateMonth = dayjs().date();
-        const todayMonth = dayjs().month();
+        const todayDateMonth = dayjs(range.to).date();
+        const todayMonth = dayjs(range.to).month();
 
         /* BIRTHDAY */
         const date2 = dayjs(range.from);
         const birthDateMonth = dayjs(range.from).date();
         const birthMonth = dayjs(range.from).month();
-        const endTimeMonth = dayjs(range.from).endOf('month');
+        const endTimeMonth = dayjs(range.to).endOf('month');
         const endTime = dayjs(endTimeMonth).date(); 
 
         const age = date1.diff(date2, 'year')
@@ -82,8 +82,12 @@ const useCounter = () => {
             }
         }
 
-        document.getElementById('resultAge').innerHTML = age + " years old,";
-        document.getElementById('resultAgeCompleted').innerHTML = monthsLived + " months and " + daysLived + " days.";
+        if (days<=0) {
+            daysLived = 0;
+        }
+
+        document.getElementById('resultAge').innerHTML = age + " years old";
+        document.getElementById('resultAgeCompleted').innerHTML = age + " years old, " + monthsLived + " months and " + daysLived + " days.";
         document.getElementById('resultBirthday').innerHTML = missingMonth + " months and " + missingDay + " days to your birthday.";
         document.getElementById('resultDays').innerHTML = "You have lived " + days + " days.";
     }
@@ -91,16 +95,16 @@ const useCounter = () => {
     return { range, footer, pastMonth, setRange, send }
 }
 
-export function ResultAge() {
+export function TimeResultAge() {
     return <p className={styles.ageage}>{<span id='resultAge'></span>}</p>
 }
-export function ResultAgeCompleted() {
+export function TimeResultAgeCompleted() {
     return <p className={styles.ageage}>{<span id='resultAgeCompleted'></span>}</p>
 }
-export function ResultBirthday() {
+export function TimeResultBirthday() {
     return <p className={styles.ageage}>{<span id='resultBirthday'></span>}</p>
 }
-export function ResultDays() {
+export function TimeResultDays() {
     return <p className={styles.ageage}>{<span id='resultDays'></span>}</p>
 }
 
@@ -132,7 +136,7 @@ export default function Time() {
                     selected={range}
                     onSelect={setRange}
                     footer={footer}
-                    fromYear={1950} toYear={3000}
+                    fromYear={0} toYear={3000}
                     captionLayout="dropdown"
                     modifiersClassNames={{
                         selected: 'selected'
