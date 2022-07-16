@@ -68,7 +68,7 @@ export function useCounter() {
             }
         }
 
-        if (days===0) {
+        if (days === 0) {
             daysLived = 0;
         }
 
@@ -109,7 +109,7 @@ const css = `
 
 export default function Age() {
 
-    const { selected, footer, setSelected, send } = useCounter()
+    const { selected, footer, setSelected, send } = useCounter();
 
     return (
         <div className={styles.body}>
@@ -122,6 +122,7 @@ export default function Age() {
                     onSelect={setSelected}
                     fromYear={1} toYear={9999}
                     captionLayout="dropdown"
+                    disabled={new Date()}
                     modifiersClassNames={{
                         selected: 'selected',
                         today: 'today'

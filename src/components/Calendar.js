@@ -14,7 +14,7 @@ export default function Calendar() {
     return (
         <div className={styles.body}>
             <div className={styles.toggle}>
-                {toggle ? <p>Today</p> : <p>Date two</p> 
+                {toggle ? <p>Start date</p> : <p>Choose two Date</p> 
                 }
                 <label className={styles.switch}>
                     <input type="checkbox" onClick={() => setToggle(!toggle)} />
