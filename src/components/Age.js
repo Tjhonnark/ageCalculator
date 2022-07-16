@@ -120,7 +120,7 @@ export default function Age() {
                     mode="single"
                     selected={selected}
                     onSelect={setSelected}
-                    fromYear={1950} toYear={3000}
+                    fromYear={1} toYear={9999}
                     captionLayout="dropdown"
                     modifiersClassNames={{
                         selected: 'selected',
