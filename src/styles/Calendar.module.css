@@ -1,0 +1,84 @@
+/* From uiverse.io by @adamgiebl */
+/* The switch - the box around the slider */
+.body {
+  background-color: rgba(34, 34, 34, 0.938);
+  box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.438);
+  width: 30%;
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+.toggle {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggle p {
+  color: aliceblue;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #5757CE;
+  transition: 0.4s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 20px;
+  left: 0.3em;
+  bottom: 0.3em;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #FECA71; /* #2196F3 */
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #FECA71;
+}
+
+input:checked + .slider:before {
+  transform: translateX(1.5em);
+}
+
+.ageCalculator {
+  width: 40%;
+}
