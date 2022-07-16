@@ -15,7 +15,6 @@ export default function Home() {
   var test1 = dayjs();
   var test2 = dayjs(selected);
   var daystest = test1.diff(test2, 'day')
-  console.log(daystest)
 
   return (
     <div className={styles.container}>

@@ -88,7 +88,7 @@ const useCounter = () => {
 
         document.getElementById('resultAge').innerHTML = age + " years old";
         document.getElementById('resultAgeCompleted').innerHTML = age + " years old, " + monthsLived + " months and " + daysLived + " days.";
-        document.getElementById('resultBirthday').innerHTML = missingMonth + " months and " + missingDay + " days to your birthday.";
+        document.getElementById('resultBirthday').innerHTML = "The next anniversary is " + missingMonth + " and " + missingDay + " days.";
         document.getElementById('resultDays').innerHTML = "You have lived " + days + " days.";
     }
 
@@ -136,7 +136,7 @@ export default function Time() {
                     selected={range}
                     onSelect={setRange}
                     footer={footer}
-                    fromYear={0} toYear={3000}
+                    fromYear={1} toYear={9999}
                     captionLayout="dropdown"
                     modifiersClassNames={{
                         selected: 'selected'
