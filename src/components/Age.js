@@ -110,6 +110,14 @@ const css = `
 export default function Age() {
 
     const { selected, footer, setSelected, send } = useCounter();
+    
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+
+    const disabledDays = [
+        { from: tomorrow, to: new Date(9999, 11, 31) }
+      ];
 
     return (
         <div className={styles.body}>
@@ -121,8 +129,8 @@ export default function Age() {
                     selected={selected}
                     onSelect={setSelected}
                     fromYear={1} toYear={9999}
+                    disabled={disabledDays}
                     captionLayout="dropdown"
-                    disabled={new Date()}
                     modifiersClassNames={{
                         selected: 'selected',
                         today: 'today'
