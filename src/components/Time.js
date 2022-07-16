@@ -136,7 +136,7 @@ export default function Time() {
                     selected={range}
                     onSelect={setRange}
                     footer={footer}
-                    fromYear={0} toYear={3000}
+                    fromYear={1} toYear={9999}
                     captionLayout="dropdown"
                     modifiersClassNames={{
                         selected: 'selected'

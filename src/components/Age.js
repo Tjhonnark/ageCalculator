@@ -68,7 +68,7 @@ export function useCounter() {
             }
         }
 
-        if (days===0) {
+        if (days === 0) {
             daysLived = 0;
         }
 
@@ -109,7 +109,15 @@ const css = `
 
 export default function Age() {
 
-    const { selected, footer, setSelected, send } = useCounter()
+    const { selected, footer, setSelected, send } = useCounter();
+    
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+
+    const disabledDays = [
+        { from: tomorrow, to: new Date(9999, 11, 31) }
+      ];
 
     return (
         <div className={styles.body}>
@@ -120,7 +128,8 @@ export default function Age() {
                     mode="single"
                     selected={selected}
                     onSelect={setSelected}
-                    fromYear={1950} toYear={3000}
+                    fromYear={1} toYear={9999}
+                    disabled={disabledDays}
                     captionLayout="dropdown"
                     modifiersClassNames={{
                         selected: 'selected',
