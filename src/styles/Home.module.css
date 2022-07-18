@@ -6,26 +6,20 @@
     #c850c0 46%,
     #ffcc70 100%
   );
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
 }
 
 .main {
-  min-height: 100vh;
+  padding: 0 0 2rem 0;
+  width: 80%;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
 }
 
-.section {
-  width: 95%;
-  height: 100vh;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  align-items: center;
-  gap: 2rem;
-}
-
-.section h1 {
+.main h1 {
   color: #ffff;
   flex-basis: 100%;
   text-align: center;
@@ -33,19 +27,28 @@
   font-family: 'lucida console', monospace;
 }
 
-.data {
-  background-color: #FFFFFF;
+.section {
+  background-color: rgba(34, 34, 34, 0.938);
   box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.438);
-  color: #000;
-  height: 22rem;
-  width: 25rem;
-  text-align: center;
+  padding: 1rem;
   border-radius: 10px;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.data {
+  background-color: #FFFFFF;
+  color: #000;
+  width: 280px;
+  height: 465px;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
 }
 
 .button {
@@ -75,6 +78,7 @@
 }
 
 .footer {
+  width: 100%;
   display: flex;
   flex: 1;
   padding: 2rem 0;
@@ -93,11 +97,4 @@
 .logo {
   height: 1em;
   margin-left: 0.5rem;
-}
-
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
 }
