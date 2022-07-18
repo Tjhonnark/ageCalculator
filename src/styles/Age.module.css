@@ -41,11 +41,13 @@
 }
 
 .resultAge {
-  margin: 0 0 0.5rem 0;
+  color: rgba(34, 34, 34, 0.938);
+  margin: 0;
   font-size: 2.5rem;
 }
 
 .ageage {
+  color: rgba(34, 34, 34, 0.938);
   margin: 0;
   font-size: 1.5rem;
 }
