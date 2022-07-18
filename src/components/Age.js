@@ -76,20 +76,39 @@ export function useCounter() {
             }
         }
 
-        if (days === 0) {
+        /* if (days === 0) {
             daysLived = 0;
-        }
+        } */
 
         if (dayjs(selected) < dayjs()) {
-            document.getElementById('resultAge').innerHTML = age + " years old";
-            document.getElementById('resultAgeCompleted').innerHTML = age + " years old, " + monthsLived + " months and " + daysLived + " days.";
-            document.getElementById('resultBirthday').innerHTML = missingMonth + " months and " + missingDay + " days to your birthday.";
-            document.getElementById('resultDays').innerHTML = "You have lived " + days + " days.";
+            document.getElementById('resultAge').innerHTML = age + " years";
+            document.getElementById('resultAgeCompleted').innerHTML = age + " years, " + monthsLived + " months and " + daysLived + " days.";
+            document.getElementById('resultBirthday').innerHTML = "The next anniversary is in " + missingMonth + " months and " + missingDay + " days.";
+            document.getElementById('resultDays').innerHTML = "It has been " + days + " days.";
         } else {
-            document.getElementById('resultAge').innerHTML = "";
-            document.getElementById('resultAgeCompleted').innerHTML = "Missing " + age + " years, " + monthsLived + " months and " + daysLived + " days.";
-            document.getElementById('resultBirthday').innerHTML = "";
-            document.getElementById('resultDays').innerHTML = days + " days to go.";
+            if (age === 0 && monthsLived === 0) {
+                document.getElementById('resultAge').innerHTML = "";
+                document.getElementById('resultAgeCompleted').innerHTML = daysLived + " days remaining.";
+                document.getElementById('resultBirthday').innerHTML = "";
+                document.getElementById('resultDays').innerHTML = "";
+            } else if (age === 0 && monthsLived > 0) {
+                if (monthsLived === 1) {
+                    document.getElementById('resultAge').innerHTML = "";
+                    document.getElementById('resultAgeCompleted').innerHTML = monthsLived + " month and " + daysLived + " days remaining.";
+                    document.getElementById('resultBirthday').innerHTML = "";
+                    document.getElementById('resultDays').innerHTML = "";
+                } else {
+                    document.getElementById('resultAge').innerHTML = "";
+                    document.getElementById('resultAgeCompleted').innerHTML = monthsLived + " months and " + daysLived + " days remaining.";
+                    document.getElementById('resultBirthday').innerHTML = "";
+                    document.getElementById('resultDays').innerHTML = "";
+                }
+            } else {
+                document.getElementById('resultAge').innerHTML = "";
+                document.getElementById('resultAgeCompleted').innerHTML = age + " years, " + monthsLived + " months and " + daysLived + " days remaining.";
+                document.getElementById('resultBirthday').innerHTML = "";
+                document.getElementById('resultDays').innerHTML = "";
+            }
         }
     }
     return { selected, footer, setSelected, send }

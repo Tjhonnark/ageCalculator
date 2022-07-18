@@ -1,5 +1,3 @@
-/* From uiverse.io by @adamgiebl */
-/* The switch - the box around the slider */
 .body {
   border-radius: 10px;
   display: flex;
@@ -9,6 +7,8 @@
   gap: 1rem;
 }
 
+/* From uiverse.io by @adamgiebl */
+/* The switch - the box around the slider */
 .toggle {
   width: 100%;
   display: flex;
@@ -46,7 +46,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #5757CE;
+  background-color: aliceblue;
   transition: 0.4s;
   border-radius: 30px;
 }
@@ -59,16 +59,16 @@
   border-radius: 20px;
   left: 0.3em;
   bottom: 0.3em;
-  background-color: white;
+  background-color: #2D262B;
   transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: #FECA71; /* #2196F3 */
+  background-color: aliceblue; /* #2196F3 */
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #FECA71;
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.438);
 }
 
 input:checked + .slider:before {

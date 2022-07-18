@@ -15,8 +15,9 @@ const useCounter = () => {
         from: "",
         to: ""
     };
-    const [range, setRange] = useState(defaultSelected);
 
+    const [range, setRange] = useState(defaultSelected);
+    
     let footer = <p className={styles.footer}>Please pick the first day.</p>;
     if (range?.from) {
         if (!range.to) {
@@ -32,12 +33,12 @@ const useCounter = () => {
 
     const send = e => {
         e.preventDefault()
-        /* TODAY */
+        /*  */
         const date1 = dayjs(range.to);
         const todayDateMonth = dayjs(range.to).date();
         const todayMonth = dayjs(range.to).month();
 
-        /* BIRTHDAY */
+        /*  */
         const date2 = dayjs(range.from);
         const birthDateMonth = dayjs(range.from).date();
         const birthMonth = dayjs(range.from).month();
@@ -88,10 +89,19 @@ const useCounter = () => {
             days = 0;
         }
 
-        document.getElementById('resultAge').innerHTML = age + " years old";
-        document.getElementById('resultAgeCompleted').innerHTML = age + " years old, " + monthsLived + " months and " + daysLived + " days.";
-        document.getElementById('resultBirthday').innerHTML = "The next anniversary is " + missingMonth + " and " + missingDay + " days.";
-        document.getElementById('resultDays').innerHTML = "You have lived " + days + " days.";
+        if (range.to === undefined) {
+            age =0;
+            daysLived = 0;
+            monthsLived = 0;
+            missingDay = 0;
+            missingMonth = 0;
+            days = 0;
+        }
+
+        document.getElementById('resultAge').innerHTML = age + " years";
+        document.getElementById('resultAgeCompleted').innerHTML = age + " years, " + monthsLived + " months and " + daysLived + " days.";
+        document.getElementById('resultBirthday').innerHTML = "The next anniversary is in " + missingMonth + " months and " + missingDay + " days.";
+        document.getElementById('resultDays').innerHTML = "It has been " + days + " days.";
     }
 
     return { range, footer, pastMonth, setRange, send }
