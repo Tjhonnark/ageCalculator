@@ -14,16 +14,14 @@ export default function Calendar() {
     return (
         <div className={styles.body}>
             <div className={styles.toggle}>
-                {toggle ? <p>Start date</p> : <p>Choose two Date</p> 
+                {toggle ? <p>Start date</p> : <p>Choose two Date</p>
                 }
                 <label className={styles.switch}>
                     <input type="checkbox" onClick={() => setToggle(!toggle)} />
                     <span className={styles.slider}></span>
                 </label>
             </div>
-            <div className={styles.ageCalculator}>
-                {toggle ? <Age /> : <Time />}
-            </div>
+            {toggle ? <Age /> : <Time />}
         </div>
     )
 }

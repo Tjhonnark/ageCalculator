@@ -1,10 +1,6 @@
 /* From uiverse.io by @adamgiebl */
 /* The switch - the box around the slider */
 .body {
-  background-color: rgba(34, 34, 34, 0.938);
-  box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.438);
-  width: 30%;
-  padding: 1rem;
   border-radius: 10px;
   display: flex;
   flex-flow: column wrap;
@@ -77,8 +73,4 @@ input:focus + .slider {
 
 input:checked + .slider:before {
   transform: translateX(1.5em);
-}
-
-.ageCalculator {
-  width: 40%;
 }

@@ -12,7 +12,7 @@ const useCounter = () => {
     const pastMonth = new Date();
 
     const defaultSelected = DateRange = {
-        from: pastMonth,
+        from: "",
         to: ""
     };
     const [range, setRange] = useState(defaultSelected);
@@ -42,11 +42,11 @@ const useCounter = () => {
         const birthDateMonth = dayjs(range.from).date();
         const birthMonth = dayjs(range.from).month();
         const endTimeMonth = dayjs(range.to).endOf('month');
-        const endTime = dayjs(endTimeMonth).date(); 
+        const endTime = dayjs(endTimeMonth).date();
 
         const age = date1.diff(date2, 'year')
         const month = date1.diff(date2, 'month')
-        const days = date1.diff(date2, 'day')
+        var days = date1.diff(date2, 'day')
 
         const monthsLived = month - (age * 12);
 
@@ -82,8 +82,10 @@ const useCounter = () => {
             }
         }
 
-        if (days<=0) {
+        if (days <= 0) {
             daysLived = 0;
+            missingDay = 0;
+            days = 0;
         }
 
         document.getElementById('resultAge').innerHTML = age + " years old";
@@ -109,16 +111,18 @@ export function TimeResultDays() {
 }
 
 const css = `
-  .selected { 
+.selected:not([disabled]) { 
+    font-weight: bold; 
+    border: 2px solid currentColor;
+    border-radius: 50%;
+}
+.selected:hover:not([disabled]) {
+}
+.today { 
     font-weight: bold;
     font-size: 110%; 
     color: #FECA71;
-  }
-  .today { 
-    font-weight: bold;
-    font-size: 140%; 
-    color: red;
-  }
+}
 `;
 
 export default function Time() {
@@ -127,22 +131,21 @@ export default function Time() {
 
     return (
         <div className={styles.body}>
-            <div>
             <style>{css}</style>
-                <DayPicker
-                    className={styles.time}
-                    mode="range"
-                    defaultMonth={pastMonth}
-                    selected={range}
-                    onSelect={setRange}
-                    footer={footer}
-                    fromYear={1} toYear={9999}
-                    captionLayout="dropdown"
-                    modifiersClassNames={{
-                        selected: 'selected'
-                    }}
-                />
-            </div>
+            <DayPicker
+                className={styles.calendar}
+                mode="range"
+                defaultMonth={pastMonth}
+                selected={range}
+                onSelect={setRange}
+                footer={footer}
+                fromYear={100} toYear={3000}
+                captionLayout="dropdown"
+                modifiersClassNames={{
+                    selected: 'selected',
+                    today: 'today'
+                }}
+            />
             <button onClick={send} className={styles.calculate}>Calculate</button>
         </div>
     )

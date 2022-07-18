@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 /* COMPONENTS */
-import { selected, AgeResultAge, AgeResultAgeCompleted, AgeResultBirthday, AgeResultDays } from '../components/Age'
+import { AgeResultAge, AgeResultAgeCompleted, AgeResultBirthday, AgeResultDays } from '../components/Age'
 import { TimeResultAge, TimeResultAgeCompleted, TimeResultDays } from '../components/Time'
 import Calendar, { Toggle } from '../components/Calendar'
 /* STYLES */
@@ -10,17 +10,15 @@ import styles from '../styles/Home.module.css'
 const dayjs = require('dayjs')
 
 export default function Home() {
-  const { toggle } = Toggle();
 
-  var test1 = dayjs();
-  var test2 = dayjs(selected);
-  var daystest = test1.diff(test2, 'day')
+  const { toggle } = Toggle();
 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
+        <h1>Age Calculator</h1>
         <section className={styles.section}>
-          <h1>Age Calculator</h1>
+          <Calendar></Calendar>
           {toggle ?
             <div className={styles.data}>
               <AgeResultAge />
@@ -33,7 +31,6 @@ export default function Home() {
               <TimeResultAgeCompleted />
               <TimeResultDays />
             </div>}
-          <Calendar></Calendar>
         </section>
       </main>
       <footer className={styles.footer}>

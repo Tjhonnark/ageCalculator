@@ -1,18 +1,17 @@
 .body {
-  width: 100%;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   justify-content: center;
-  gap: 0.5rem;
+  align-items: center;
 }
 
-.age {
+.calendar {
   color: #c5c5c5;
 }
 
 .footer {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 .calculate {

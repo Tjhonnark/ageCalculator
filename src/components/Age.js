@@ -10,24 +10,31 @@ const dayjs = require('dayjs')
 export function useCounter() {
 
     const [selected, setSelected] = useState();
-
-    let footer = <p>Please pick a day.</p>;
+    
+    let footer = <p className={styles.footer}>Please pick a day.</p>;
     if (selected) {
         footer = <p className={styles.footer}>{format(selected, 'PP')}.</p>;
     }
 
     const send = e => {
         e.preventDefault()
+
+        if (dayjs(selected) < dayjs()) {
+            var date1 = dayjs();
+            var date2 = dayjs(selected);
+        } else {
+            var date1 = dayjs(selected);
+            var date2 = dayjs();
+        }
+
         /* TODAY */
-        var date1 = dayjs();
-        const todayDateMonth = dayjs().date();
-        const todayMonth = dayjs().month();
+        const todayDateMonth = date1.date();
+        const todayMonth = date1.month();
 
         /* BIRTHDAY */
-        var date2 = dayjs(selected);
-        const birthDateMonth = dayjs(selected).date();
-        const birthMonth = dayjs(selected).month();
-        const endTimeMonth = dayjs(selected).endOf('month');
+        const birthDateMonth = date2.date();
+        const birthMonth = date2.month();
+        const endTimeMonth = date2.endOf('month');
         const endTime = dayjs(endTimeMonth).date();
 
         const age = date1.diff(date2, 'year')
@@ -35,6 +42,7 @@ export function useCounter() {
         const days = date1.diff(date2, 'day')
 
         const monthsLived = month - (age * 12);
+
 
         if (todayMonth < birthMonth) {
             if (todayDateMonth <= birthDateMonth) {
@@ -72,25 +80,32 @@ export function useCounter() {
             daysLived = 0;
         }
 
-        document.getElementById('resultAge').innerHTML = age + " years old";
-        document.getElementById('resultAgeCompleted').innerHTML = age + " years old, " + monthsLived + " months and " + daysLived + " days.";
-        document.getElementById('resultBirthday').innerHTML = missingMonth + " months and " + missingDay + " days to your birthday.";
-        document.getElementById('resultDays').innerHTML = "You have lived " + days + " days.";
+        if (dayjs(selected) < dayjs()) {
+            document.getElementById('resultAge').innerHTML = age + " years old";
+            document.getElementById('resultAgeCompleted').innerHTML = age + " years old, " + monthsLived + " months and " + daysLived + " days.";
+            document.getElementById('resultBirthday').innerHTML = missingMonth + " months and " + missingDay + " days to your birthday.";
+            document.getElementById('resultDays').innerHTML = "You have lived " + days + " days.";
+        } else {
+            document.getElementById('resultAge').innerHTML = "";
+            document.getElementById('resultAgeCompleted').innerHTML = "Missing " + age + " years, " + monthsLived + " months and " + daysLived + " days.";
+            document.getElementById('resultBirthday').innerHTML = "";
+            document.getElementById('resultDays').innerHTML = days + " days to go.";
+        }
     }
     return { selected, footer, setSelected, send }
 }
 
 export function AgeResultAge() {
-    return <p className={styles.resultAge}>{<span id='resultAge'></span>}</p>
+    return <>{<span id='resultAge' className={styles.resultAge}></span>}</>
 }
 export function AgeResultAgeCompleted() {
-    return <p className={styles.ageage}>{<span id='resultAgeCompleted'></span>}</p>
+    return <>{<span id='resultAgeCompleted' className={styles.ageage}></span>}</>
 }
 export function AgeResultBirthday() {
-    return <p className={styles.ageage}>{<span id='resultBirthday'></span>}</p>
+    return <>{<span id='resultBirthday' className={styles.ageage}></span>}</>
 }
 export function AgeResultDays() {
-    return <p className={styles.ageage}>{<span id='resultDays'></span>}</p>
+    return <>{<span id='resultDays' className={styles.ageage}></span>}</>
 }
 
 const css = `
@@ -110,36 +125,35 @@ const css = `
 export default function Age() {
 
     const { selected, footer, setSelected, send } = useCounter();
-    
+
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
 
     const disabledDays = [
         { from: tomorrow, to: new Date(9999, 11, 31) }
-      ];
+    ];
 
     return (
         <div className={styles.body}>
-            <div>
-                <style>{css}</style>
-                <DayPicker
-                    className={styles.age}
-                    mode="single"
-                    selected={selected}
-                    onSelect={setSelected}
-                    fromYear={1} toYear={9999}
-                    disabled={disabledDays}
-                    captionLayout="dropdown"
-                    modifiersClassNames={{
-                        selected: 'selected',
-                        today: 'today'
-                    }}
-                /* styles={{
-                    caption: { color: '#FECA71' }
-                  }} */
-                />
-            </div>
+            <style>{css}</style>
+            <DayPicker
+                className={styles.calendar}
+                mode="single"
+                selected={selected}
+                onSelect={setSelected}
+                fromYear={100} toYear={3000}
+                /* disabled={disabledDays} */
+                footer={footer}
+                captionLayout="dropdown"
+                modifiersClassNames={{
+                    selected: 'selected',
+                    today: 'today'
+                }}
+            /* styles={{
+                caption: { color: '#FECA71' }
+            }} */
+            />
             <button onClick={send} className={styles.calculate}>Calculate</button>
         </div>
     )
