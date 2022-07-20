@@ -1,19 +1,27 @@
 .body {
+  background-color: aqua;
   display: flex;
   flex-flow: column wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
 .calendar {
+  background-color: red;
   color: #c5c5c5;
 }
 
 .footer {
+  background-color: blueviolet; 
+  position: sticky;
   text-align: center;
   font-size: 1rem;
 }
-
+/* static
+relative
+fixed
+absolute
+sticky */
 .calculate {
   padding: 1.3em 3em;
   font-size: 12px;
